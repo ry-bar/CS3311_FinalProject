@@ -5,18 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Junk</title>
 
-        <link rel="stylesheet" href="/style/styles.css" />
+        <base href="http://localhost/CS3311_FinalProject/">
+        <link rel="stylesheet" href="style/styles.css" />
 
-        <div id="navbar-placeholder"></div>
-        <script src="/scripts/fetch_navbar.js"></script>
+        <script src="scripts/fetch_navbar.js"></script>
 
     </head>
 
     <body>
+        <div id="navbar-placeholder"></div>
         <h1>Welcome to Scrap</h1>
         <p>Get your hands on our junk!</p>
     </body>
 
     <div id="footer-placeholder"></div>
-    <script src="/scripts/fetch_footer.js"></script>
+    <script src="scripts/fetch_footer.js"></script>
 </html>
