@@ -1,4 +1,4 @@
-fetch("../partials/navbar.html")
+fetch("partials/navbar.html")
     .then(response => response.text())
     .then(data => {
         document.getElementById("navbar-placeholder").innerHTML = data;
