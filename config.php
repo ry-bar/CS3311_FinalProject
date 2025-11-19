@@ -5,7 +5,8 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "scrap_database";
+/*$db = "scrap_database";*/
+$db = "user_auth";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
