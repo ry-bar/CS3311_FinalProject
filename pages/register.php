@@ -1,6 +1,6 @@
 <?php 
 
-require __DIR__."/config.php";
+require __DIR__."/../config.php";
 
 $errors = [];
 
@@ -53,14 +53,16 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style src="style/styles.css"></style>
+    
     <title>Register</title>
+    <base href="http://localhost/CS3311_FinalProject/">
+
+    <link rel="stylesheet" href="style/styles.css">
 </head>
 <body>
     <?php

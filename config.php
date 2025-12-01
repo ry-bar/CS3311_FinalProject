@@ -1,12 +1,13 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $host = "localhost";
 $user = "root";
 $pass = "";
-/*$db = "scrap_database";*/
-$db = "user_auth";
+$db = "scrap_database";
 
 $conn = new mysqli($host, $user, $pass, $db);
 

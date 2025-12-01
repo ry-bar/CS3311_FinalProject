@@ -6,17 +6,15 @@
         <title>Contact Us</title>
         <base href="http://localhost/CS3311_FinalProject/">
         <link rel="stylesheet" href="style/styles.css">
-
-        <script src="scripts/fetch_navbar.js"></script>
+        <script src="scripts/open_close_reg.js" defer></script>
     </head>
     <body>
-        <div id="navbar-placeholder"></div>
+        <?php include __DIR__ . "/../partials/navbar.php"; ?>
         <h1>Contact Us</h1>
         <p>
             Phone: 208 123 4567<br>
             Email: contactus@howdoesemailevenwork.com
+        </p>
+        <?php include __DIR__ . "/../partials/footer.php"; ?>
     </body>
-
-    <div id="footer-placeholder"></div>
-    <script src="scripts/fetch_footer.js"></script>
 </html>
