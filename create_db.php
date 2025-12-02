@@ -4,7 +4,7 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 
-$db = "auth_users";
+$db = "scrap_database";
 
 $conn = new mysqli($host, $user, $pass);
 
