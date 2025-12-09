@@ -57,6 +57,14 @@ try {
             stock INT DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (vehicle_type_id) REFERENCES vehicle_types(id) ON DELETE CASCADE
+        )",
+        "CREATE TABLE IF NOT EXISTS user_saved_car(
+            vin_number VARCHAR(17) PRIMARY KEY,
+            user_id INT UNSIGNED NOT NULL,
+            vehicle_type_id INT NOT NULL,
+            saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (vehicle_type_id) REFERENCES vehicle_types(id) ON DELETE CASCADE
         )"
     ];
 
@@ -71,10 +79,12 @@ try {
     require_once __DIR__ . '/fill_vehicle_types.php';
     require_once __DIR__ . '/fill_parts.php';
     require_once __DIR__ . '/fill_users.php';
+    require_once __DIR__ . '/fill_user_saved_car.php';
 
     seed_vehicle_types($conn);
     seed_parts($conn);
     seed_users($conn);
+    seed_user_saved_car($conn);
 
     echo "<p>Database seeding complete.</p>";
 } catch (Throwable $e) {
