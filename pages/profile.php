@@ -39,6 +39,48 @@ function fetchUserById(mysqli $conn, int $userId): ?array {
 
 $user = fetchUserById($conn, $userId);
 
+function fetchSavedCars(mysqli $conn, int $userId): array {
+    $sql = "
+        SELECT 
+            usc.vin_number AS vin,
+            usc.saved_at,
+            vt.slug AS vehicle_slug,
+            vt.name AS vehicle_name
+        FROM user_saved_car usc
+        INNER JOIN vehicle_types vt ON vt.id = usc.vehicle_type_id
+        WHERE usc.user_id = ?
+        ORDER BY usc.saved_at DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        return [];
+    }
+
+    $stmt->bind_param("i", $userId);
+    if (!$stmt->execute()) {
+        $stmt->close();
+        return [];
+    }
+
+    $result = $stmt->get_result();
+    $cars = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $cars[] = [
+            "vin" => $row["vin"],
+            "vehicle_type" => $row["vehicle_slug"] ?: $row["vehicle_name"],
+            "vehicle_type_name" => $row["vehicle_name"],
+            "saved_at" => $row["saved_at"],
+        ];
+    }
+
+    $stmt->close();
+    return $cars;
+}
+
+$savedCars = $user ? fetchSavedCars($conn, $userId) : [];
+
 if (!$user) {
     $errors[] = "We couldn't load your account details right now. Please try again later.";
 }
@@ -153,6 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
     <base href="http://localhost/CS3311_FinalProject/">
     <link rel="stylesheet" href="style/styles.css">
     <script src="scripts/open_close_reg.js" defer></script>
+    <script src="scripts/profile_saved_cars.js" defer></script>
 </head>
 <body>
     <?php include __DIR__ . "/../partials/navbar.php"; ?>
@@ -163,6 +206,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
                 <h2>Welcome back, <?= htmlspecialchars($user["username"] ?? ""); ?></h2>
                 <p><strong>Username:</strong> <?= htmlspecialchars($user["username"] ?? ""); ?></p>
                 <p><strong>Email:</strong> <?= htmlspecialchars($user["email"] ?? ""); ?></p>
+            </article>
+
+            <article id="saved_cars" class="profile_card">
+                <h2>Saved Cars</h2>
+                <p>View and manage your saved cars!</p>
+                <label><strong>VIN:</strong></label>
+                <input type="text" id="vin_input" placeholder="Enter VIN"></input>
+                <label><strong>Type:</strong></label>
+                <select id="vehicle_type_select">
+                    <option value="">-- All Types --</option>
+                </select></br></br>
+                <button id="clear_saved_cars_btn">Clear</button>
+                <button id="save_car_btn">Save</button></br></br>
+                <div id="save_car_status" role="status" aria-live="polite"></div>
+                <div id="saved_cars_list">
+                    <?php if (empty($savedCars)): ?>
+                        <p class="saved_cars_empty">You haven't saved any cars yet.</p>
+                    <?php else: ?>
+                        <div class="saved_cars_lines">
+                            <?php foreach ($savedCars as $car): ?>
+                                <p class="saved_car_line">
+                                    <span class="saved_car_field"><strong>Type:</strong> <?= htmlspecialchars($car["vehicle_type_name"] ?? $car["vehicle_type"] ?? ""); ?></span>
+                                    <span class="saved_car_field"><strong>VIN:</strong> <?= htmlspecialchars($car["vin"] ?? ""); ?></span>
+                                    <?php if (!empty($car["saved_at"])): ?>
+                                        <span class="saved_car_field"><strong>Saved:</strong> <?= htmlspecialchars($car["saved_at"] ?? ""); ?></span>
+                                    <?php endif; ?>
+                                </p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </article>
 
             <article id="update" class="profile_card">
@@ -201,7 +275,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
             </article>
         </section>
     </main>
-
-    <?php include __DIR__ . "/../partials/footer.php"; ?>
 </body>
 </html>
