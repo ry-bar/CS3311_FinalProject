@@ -188,7 +188,7 @@ img.about_us {
 
 }
 button.form_column_flex {
-  display: flex;
+  
   padding: 5px;
   text-align: center;
   border:5px, lightcoral;

@@ -23,7 +23,7 @@
             <input id="phone_number"></div>
             <div class="form_column_flex"><label for="favorite_animal">Enter your favorite animal:</label>
             <input id="favorite_animal"></div>
-            <button id="submitButton" class="form_column_flex">We'll tow your car</button>
+            <div  class="form_column_flex"><button id="submitButton" class="form_column_flex">We'll tow your car</button></div>
 
         </div>
         <?php include __DIR__ . "/../partials/footer.php"; ?>
