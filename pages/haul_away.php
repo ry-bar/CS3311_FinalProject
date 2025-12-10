@@ -53,8 +53,8 @@
                 </select>
             </div>
             <div class="form_column_flex">
-                <label for="comments">Enter any comments you would like our team to know:</label>
-                <textarea id="comments" rows="5" cols="40" placeholder="Put any comments you would like our techs and advisors to know"></textarea>
+                <label for="comments">Comments:</label>
+                <textarea id="comments" rows="5" cols="40" placeholder="Put any comments you would like our team to know"></textarea>
             </div>
             <div  class="form_column_flex"><button id="submitButton" class="form_column_flex">Submit</button></div>
 
