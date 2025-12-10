@@ -30,17 +30,26 @@
                 <label for="vehicle_type">Enter your vehicle type:</label>
                 
                 <select id="vehicle_type" name="selectedVehicle">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                    <option value="car">Car</option>
+                    <option value="truck">Truck</option>
+                    <option value="motorcycle">Motorcycle</option>
+
+                    <option value="suv">SUV</option>
+                    <!--
+                    <option value="rv">Option 4</option>
+                    <option value="other">Option 5</option>
+                    <option value="semi">Option 6</option>
+                    <option value="bus">Option 7</option> -->
+                    
                 </select>
             </div>
             <div class="form_column_flex">
                 <label for="service_type">Enter your service type:</label>
                 <select id="service_type" name="selectedService">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                    <option value="inspection">Inspection</option>
+                    <option value="tow">Vehicle Tow</option>
+                    <option value="repair">Repair</option>
+                    <option value="maintenance">Maintenance</option>
                 </select>
             </div>
             <div class="form_column_flex">
