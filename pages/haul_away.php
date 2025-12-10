@@ -52,9 +52,9 @@
                     <option value="maintenance">Maintenance</option>
                 </select>
             </div>
+            <label for="comments">Comments:</label>
             <div class="form_column_flex">
-                <label for="comments">Comments:</label>
-                <textarea id="comments" rows="5" cols="40" placeholder="Put any comments you would like our team to know"></textarea>
+                <textarea id="comments" rows="5" cols="40" placeholder="Put any comments you would like our team to know!"></textarea>
             </div>
             <div  class="form_column_flex"><button id="submitButton" class="form_column_flex">Submit</button></div>
 
