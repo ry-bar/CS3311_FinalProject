@@ -33,7 +33,6 @@
                     <option value="car">Car</option>
                     <option value="truck">Truck</option>
                     <option value="motorcycle">Motorcycle</option>
-
                     <option value="suv">SUV</option>
                     <!--
                     <option value="rv">Option 4</option>
@@ -59,7 +58,8 @@
             <div  class="form_column_flex"><button id="submitButton" class="form_column_flex">Submit</button></div>
 
         </div>
-                <!-- name, email, phonenumber, comments, vehicle_type, service_type -->
+        
+        <!-- name, email, phonenumber, comments, vehicle_type, service_type -->
 
         <!-- button handling -->
         <?php include __DIR__ . "/../partials/footer.php"; ?>
