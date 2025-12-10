@@ -15,17 +15,44 @@
         <h1>Having Junk Issues? We Think Your Junk Is Amazing!</h1>
         <h3> Call Us at (208) 312-3123! </h3>
         <div id="form_column">
-            <div class="form_column_flex"><label for="name">Enter your name:</label>
-            <input id="name"></div>
-            <div class="form_column_flex"><label for="email">Enter your email:</label>
-            <input id="email"></div>
-            <div class="form_column_flex"><label for="phone_number">Enter your phone</label>
-            <input id="phone_number"></div>
-            <div class="form_column_flex"><label for="favorite_animal">Enter your favorite animal:</label>
-            <input id="favorite_animal"></div>
-            <div  class="form_column_flex"><button id="submitButton" class="form_column_flex">We'll tow your car</button></div>
+            <div class="form_column_flex">
+                <label for="name">Enter your name:</label>
+                <input id="name">
+            <div class="form_column_flex">
+                <label for="email">Enter your email:</label>
+                <input id="email">
+            </div>
+            <div class="form_column_flex">
+                <label for="phone_number">Enter your phone:</label>
+                <input id="phone_number">
+            </div>
+            <div class="form_column_flex">
+                <label for="vehicle_type">Enter your vehicle type:</label>
+                
+                <select id="vehicle_type" name="selectedVehicle">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
+            </div>
+            <div class="form_column_flex">
+                <label for="service_type">Enter your service type:</label>
+                <select id="service_type" name="selectedService">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
+            </div>
+            <div class="form_column_flex">
+                <label for="comments">Enter any comments you would like our team to know:</label>
+                <textarea id="comments" rows="5" cols="40" placeholder="Put any comments you would like our techs and advisors to know"></textarea>
+            </div>
+            <div  class="form_column_flex"><button id="submitButton" class="form_column_flex">Submit</button></div>
 
         </div>
+                <!-- name, email, phonenumber, comments, vehicle_type, service_type -->
+
+        <!-- button handling -->
         <?php include __DIR__ . "/../partials/footer.php"; ?>
     </body>
 </html>
