@@ -28,7 +28,7 @@
             Various versions have evolved over the years, sometimes by accident, 
             sometimes on purpose (injected humour and the like).
         </p>
-       <img class="about_us" src="/images/origins.png">
+        <img class="about_us" src="images/origins.png">
         </div>
         <?php include __DIR__ . "/../partials/footer.php"; ?>
     </body>
