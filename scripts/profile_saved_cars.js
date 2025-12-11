@@ -6,6 +6,14 @@ const initProfileSavedCars = () => {
   const clearButton = document.getElementById("clear_saved_cars_btn");
   const statusBox = document.getElementById("save_car_status");
   const savedCarsList = document.getElementById("saved_cars_list");
+  const paginationControls = document.querySelector(".saved_cars_pagination");
+  const paginationPrev = document.getElementById("saved_cars_prev");
+  const paginationNext = document.getElementById("saved_cars_next");
+  const paginationStatus = document.getElementById("saved_cars_page_status");
+
+  const pageSize = Number(paginationControls?.dataset.pageSize) || 3;
+  let savedCarsData = [];
+  let currentPage = 1;
 
   if (!savedCarForm || !typeSelect || !vinInput || !saveButton || !savedCarsList) {
     return;
@@ -126,48 +134,90 @@ const initProfileSavedCars = () => {
     await loadSavedCars({ showLoading: true });
   };
 
-  const createField = (label, value) => {
-    const span = document.createElement("span");
-    span.className = "saved_car_field";
-    const labelElement = document.createElement("strong");
-    labelElement.textContent = label;
-    span.append(labelElement, " ", value || "Unknown");
-    return span;
+  const getTotalPages = () => {
+    if (!savedCarsData.length) {
+      return 0;
+    }
+    return Math.max(1, Math.ceil(savedCarsData.length / pageSize));
   };
 
-  const renderSavedCars = (cars) => {
+  const updatePaginationControls = () => {
+    if (!paginationControls || !paginationStatus) {
+      return;
+    }
+
+    const totalPages = getTotalPages();
+    const hasResults = savedCarsData.length > 0;
+
+    paginationControls.style.display = hasResults ? "flex" : "none";
+
+    if (paginationPrev) {
+      paginationPrev.disabled = currentPage <= 1;
+    }
+    if (paginationNext) {
+      paginationNext.disabled = currentPage >= totalPages;
+    }
+
+    paginationStatus.textContent = hasResults
+      ? `Page ${currentPage} of ${totalPages}`
+      : "No saved cars";
+  };
+
+  const renderSavedCars = () => {
     savedCarsList.innerHTML = "";
 
-    if (!Array.isArray(cars) || cars.length === 0) {
+    if (!Array.isArray(savedCarsData) || savedCarsData.length === 0) {
       const emptyState = document.createElement("p");
       emptyState.className = "saved_cars_empty";
       emptyState.textContent = "You haven't saved any cars yet.";
       savedCarsList.appendChild(emptyState);
+      updatePaginationControls();
       return;
     }
 
-    const lines = document.createElement("div");
-    lines.className = "saved_cars_lines";
+    const startIndex = (currentPage - 1) * pageSize;
+    const paginatedCars = savedCarsData.slice(startIndex, startIndex + pageSize);
 
-    cars.forEach((car) => {
-      const line = document.createElement("p");
-      line.className = "saved_car_line";
+    const tableWrapper = document.createElement("div");
+    tableWrapper.className = "saved_cars_table_wrapper";
 
-      const typeLabel = car.vehicle_type_name || car.vehicle_type || "";
-      line.appendChild(createField("Type:", typeLabel));
-      line.appendChild(document.createTextNode(" "));
+    const table = document.createElement("table");
+    table.className = "saved_cars_table";
 
-      line.appendChild(createField("VIN:", car.vin || ""));
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    ["Type", "VIN", "Saved"].forEach((label) => {
+      const th = document.createElement("th");
+      th.scope = "col";
+      th.textContent = label;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
 
-      if (car.saved_at) {
-        line.appendChild(document.createTextNode(" "));
-        line.appendChild(createField("Saved:", car.saved_at));
-      }
+    const tbody = document.createElement("tbody");
+    paginatedCars.forEach((car) => {
+      const row = document.createElement("tr");
 
-      lines.appendChild(line);
+      const typeCell = document.createElement("td");
+      typeCell.textContent = car.vehicle_type_name || car.vehicle_type || "—";
+      row.appendChild(typeCell);
+
+      const vinCell = document.createElement("td");
+      vinCell.textContent = car.vin || "—";
+      row.appendChild(vinCell);
+
+      const savedCell = document.createElement("td");
+      savedCell.textContent = car.saved_at || "—";
+      row.appendChild(savedCell);
+
+      tbody.appendChild(row);
     });
 
-    savedCarsList.appendChild(lines);
+    table.appendChild(tbody);
+    tableWrapper.appendChild(table);
+    savedCarsList.appendChild(tableWrapper);
+    updatePaginationControls();
   };
 
   const loadSavedCars = async ({ showLoading = false } = {}) => {
@@ -184,7 +234,9 @@ const initProfileSavedCars = () => {
         throw new Error(message);
       }
 
-      renderSavedCars(payload.cars || []);
+      savedCarsData = Array.isArray(payload.cars) ? payload.cars : [];
+      currentPage = 1;
+      renderSavedCars();
     } catch (error) {
       console.error("Unable to load saved cars:", error);
       savedCarsList.innerHTML = "";
@@ -192,6 +244,9 @@ const initProfileSavedCars = () => {
       errorMessage.className = "saved_cars_error";
       errorMessage.textContent = error.message || "Unable to load saved cars.";
       savedCarsList.appendChild(errorMessage);
+      savedCarsData = [];
+      currentPage = 1;
+      updatePaginationControls();
     }
   };
 
@@ -207,6 +262,27 @@ const initProfileSavedCars = () => {
   loadVehicleTypes();
   const shouldShowInitialLoading = savedCarsList.children.length === 0;
   loadSavedCars({ showLoading: shouldShowInitialLoading });
+
+  if (paginationPrev) {
+    paginationPrev.addEventListener("click", () => {
+      if (currentPage <= 1) {
+        return;
+      }
+      currentPage -= 1;
+      renderSavedCars();
+    });
+  }
+
+  if (paginationNext) {
+    paginationNext.addEventListener("click", () => {
+      const totalPages = getTotalPages();
+      if (currentPage >= totalPages) {
+        return;
+      }
+      currentPage += 1;
+      renderSavedCars();
+    });
+  }
 };
 
 if (document.readyState === "loading") {

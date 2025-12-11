@@ -202,14 +202,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
     <main class="profile_page">
         <section class="profile_content">
             <article id="overview" class="profile_card">
-                <h2>Welcome back, <?= htmlspecialchars($user["username"] ?? ""); ?></h2>
+                <div class="profile_hero">
+                    <h2>Welcome back, <?= htmlspecialchars($user["username"] ?? ""); ?></h2>
+                    <p class="profile_hero_text">Here is your latest account snapshot.</p>
+                </div>
                 <p><strong>Username:</strong> <?= htmlspecialchars($user["username"] ?? ""); ?></p>
                 <p><strong>Email:</strong> <?= htmlspecialchars($user["email"] ?? ""); ?></p>
             </article>
 
             <article id="saved_cars" class="profile_card">
-                <h2>Saved Cars</h2>
-                <p>View and manage your saved cars!</p>
+                <div class="profile_hero">
+                    <h2>Saved Cars</h2>
+                    <p class="profile_hero_text">Keep tabs on the vehicles you're monitoring.</p>
+                </div>
                 <form id="saved_car_form" class="saved_car_form" novalidate>
                     <label for="vin_input"><strong>VIN:</strong></label>
                     <input type="text" id="vin_input" placeholder="Enter VIN">
@@ -227,24 +232,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
                     <?php if (empty($savedCars)): ?>
                         <p class="saved_cars_empty">You haven't saved any cars yet.</p>
                     <?php else: ?>
-                        <div class="saved_cars_lines">
-                            <?php foreach ($savedCars as $car): ?>
-                                <p class="saved_car_line">
-                                    <span class="saved_car_field"><strong>Type:</strong> <?= htmlspecialchars($car["vehicle_type_name"] ?? $car["vehicle_type"] ?? ""); ?></span>
-                                    <span class="saved_car_field"><strong>VIN:</strong> <?= htmlspecialchars($car["vin"] ?? ""); ?></span>
-                                    <?php if (!empty($car["saved_at"])): ?>
-                                        <span class="saved_car_field"><strong>Saved:</strong> <?= htmlspecialchars($car["saved_at"] ?? ""); ?></span>
-                                    <?php endif; ?>
-                                </p>
-                            <?php endforeach; ?>
+                        <div class="saved_cars_table_wrapper">
+                            <table class="saved_cars_table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">VIN</th>
+                                        <th scope="col">Saved</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($savedCars as $car): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($car["vehicle_type_name"] ?? $car["vehicle_type"] ?? ""); ?></td>
+                                            <td><?= htmlspecialchars($car["vin"] ?? ""); ?></td>
+                                            <td><?= htmlspecialchars($car["saved_at"] ?? "—"); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     <?php endif; ?>
+                </div>
+                <div class="saved_cars_pagination" data-page-size="3">
+                    <button type="button" id="saved_cars_prev" aria-label="Previous saved cars page">&larr;</button>
+                    <span id="saved_cars_page_status" aria-live="polite">Page 1</span>
+                    <button type="button" id="saved_cars_next" aria-label="Next saved cars page">&rarr;</button>
                 </div>
             </article>
 
             <article id="update" class="profile_card">
-                <h2>Update Account</h2>
-                <p>Verify your current password, then pick what you would like to change.</p>
+                <div class="profile_hero">
+                    <h2>Update Account</h2>
+                    <p class="profile_hero_text">Verify your password, then choose what to refresh.</p>
+                </div>
 
                 <?php if ($errors): ?>
                     <div class="form_message error">
