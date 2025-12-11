@@ -1,9 +1,27 @@
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: #2e2e2e;
   color: #e0e0e0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: #3b3b3b;
 }
 
 
@@ -272,13 +290,6 @@ button.form_column_flex {
 }
 
 /* ===== Footer ===== */
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #3b3b3b;
-}
-
 .footer a:unvisited {
     color: #64B5F6;
 }
