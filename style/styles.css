@@ -411,3 +411,12 @@ img.footer{
     flex-direction: column;
   }
 }
+
+.lookup_form {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20%;
+}
+.lookup_form label {
+  margin-right: 1rem;
+}
