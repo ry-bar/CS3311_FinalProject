@@ -4,8 +4,8 @@ function seed_vehicle_types(mysqli $conn): void
 {
     $vehicleTypes = [
         ['name' => 'Cars', 'slug' => 'car', 'description' => 'Standard passenger vehicles'],
-        ['name' => 'Trucks', 'slug' => 'trucks', 'description' => 'Light and heavy duty pickup trucks'],
-        ['name' => 'Motorcycles', 'slug' => 'motor_cycle', 'description' => 'Street and off-road bikes'],
+        ['name' => 'Trucks', 'slug' => 'truck', 'description' => 'Light and heavy duty pickup trucks'],
+        ['name' => 'Motorcycles', 'slug' => 'motorcycle', 'description' => 'Street and off-road bikes'],
         ['name' => 'SUVs', 'slug' => 'suv', 'description' => 'Sport utility vehicles']
     ];
 
