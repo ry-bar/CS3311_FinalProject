@@ -184,10 +184,13 @@ img.about_us {
   text-align: center;
   max-width: 70%;
   justify-content: center;
+  
 }
 .form_column_flex{
   position: flex;
   text-align: center;
+  padding-top:1%;
+  padding-bottom: 1% ;
 
 }
 button.form_column_flex {
