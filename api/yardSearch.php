@@ -30,7 +30,7 @@ try {
             "SELECT parts.name, parts.sku, parts.condition, parts.notes, vehicle_types.name as vehicle_type_name
              FROM parts 
              JOIN vehicle_types ON parts.vehicle_type_id = vehicle_types.id
-             WHERE parts.name LIKE ? OR parts.sku LIKE ?"
+             WHERE parts.name LIKE ?"
 
         );
 
