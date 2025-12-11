@@ -195,7 +195,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
     <base href="http://localhost/CS3311_FinalProject/">
     <link rel="stylesheet" href="style/styles.css">
     <script src="scripts/open_close_reg.js" defer></script>
-    <script src="scripts/profile_saved_cars.js" defer></script>
 </head>
 <body>
     <?php include __DIR__ . "/../partials/navbar.php"; ?>
@@ -211,15 +210,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
             <article id="saved_cars" class="profile_card">
                 <h2>Saved Cars</h2>
                 <p>View and manage your saved cars!</p>
-                <label><strong>VIN:</strong></label>
-                <input type="text" id="vin_input" placeholder="Enter VIN"></input>
-                <label><strong>Type:</strong></label>
-                <select id="vehicle_type_select">
-                    <option value="">-- All Types --</option>
-                </select></br></br>
-                <button id="clear_saved_cars_btn">Clear</button>
-                <button id="save_car_btn">Save</button></br></br>
-                <div id="save_car_status" role="status" aria-live="polite"></div>
+                <form id="saved_car_form" class="saved_car_form" novalidate>
+                    <label for="vin_input"><strong>VIN:</strong></label>
+                    <input type="text" id="vin_input" placeholder="Enter VIN">
+                    <label for="vehicle_type_select"><strong>Type:</strong></label>
+                    <select id="vehicle_type_select">
+                        <option value="">-- All Types --</option>
+                    </select>
+                    <div class="saved_car_actions">
+                        <button type="button" id="clear_saved_cars_btn">Clear</button>
+                        <button type="button" id="save_car_btn">Save</button>
+                    </div>
+                    <div id="save_car_status" role="status" aria-live="polite"></div>
+                </form>
                 <div id="saved_cars_list">
                     <?php if (empty($savedCars)): ?>
                         <p class="saved_cars_empty">You haven't saved any cars yet.</p>
@@ -275,5 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
             </article>
         </section>
     </main>
+    <script src="scripts/check_vin.js"></script>
+    <script src="scripts/profile_saved_cars.js"></script>
 </body>
 </html>

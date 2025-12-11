@@ -1,11 +1,13 @@
-document.addEventListener("DOMContentLoaded", () => {
+const initProfileSavedCars = () => {
+  const savedCarForm = document.getElementById("saved_car_form");
   const typeSelect = document.getElementById("vehicle_type_select");
   const vinInput = document.getElementById("vin_input");
   const saveButton = document.getElementById("save_car_btn");
+  const clearButton = document.getElementById("clear_saved_cars_btn");
   const statusBox = document.getElementById("save_car_status");
   const savedCarsList = document.getElementById("saved_cars_list");
 
-  if (!typeSelect || !vinInput || !saveButton || !savedCarsList) {
+  if (!savedCarForm || !typeSelect || !vinInput || !saveButton || !savedCarsList) {
     return;
   }
 
@@ -62,6 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return selectedOption?.dataset.typeId || "";
   };
 
+  const resetVehicleForm = ({ keepStatus = false } = {}) => {
+    savedCarForm.reset();
+    vinInput.classList.remove("input_error");
+    vinInput.removeAttribute("aria-invalid");
+    if (!keepStatus) {
+      setStatus("");
+    }
+    window.requestAnimationFrame(() => {
+      vinInput.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  };
+
   const saveVehicle = async () => {
     const vin = vinInput.value.trim();
     const vehicleTypeId = getSelectedVehicleTypeId();
@@ -102,8 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(message);
       }
 
-      vinInput.value = "";
-      typeSelect.value = "";
+      resetVehicleForm({ keepStatus: true });
       setStatus("Vehicle saved!");
     } catch (error) {
       setStatus(error.message || "Unable to save vehicle.", true);
@@ -183,7 +196,21 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   saveButton.addEventListener("click", saveVehicle);
+
+  if (clearButton) {
+    clearButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      resetVehicleForm();
+    });
+  }
+
   loadVehicleTypes();
   const shouldShowInitialLoading = savedCarsList.children.length === 0;
   loadSavedCars({ showLoading: shouldShowInitialLoading });
-});
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initProfileSavedCars);
+} else {
+  initProfileSavedCars();
+}
