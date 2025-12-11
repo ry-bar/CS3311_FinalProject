@@ -415,8 +415,22 @@ img.footer{
 .lookup_form {
   display: flex;
   flex-direction: row;
-  margin-left: 20%;
+  justify-content: center;
+
+  
 }
 .lookup_form label {
   margin-right: 1rem;
+  margin-left: 1rem;
+}
+.lookup_form_block {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+}
+.lookup_form_stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }

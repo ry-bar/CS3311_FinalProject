@@ -7,6 +7,7 @@
         <base href="http://localhost/CS3311_FinalProject/">
         <link rel="stylesheet" href="style/styles.css">
         <script src="scripts/open_close_reg.js" defer></script>
+        <script src="scripts/yardLookup.js" defer></script>
     </head>
 
     <body>
@@ -14,28 +15,26 @@
 
         <h1>Look At Our Junk</h1>
         <div class="lookup_form">
-        <label for="yard search">Search Our Yard: </label>
-        <input id="yard search">
-        </div>
-        
-        <!-- <div id="saved_cars_list">
-            <?php if (empty($savedCars)): ?>
-                    <p class="saved_cars_empty">You haven't saved any cars yet.</p>
-                <?php else: ?>
-                    <div class="saved_cars_lines">
-                        <?php foreach ($savedCars as $car): ?>
-                            <p class="saved_car_line">
-                                <span class="saved_car_field"><strong>Type:</strong> <?= htmlspecialchars($car["vehicle_type_name"] ?? $car["vehicle_type"] ?? ""); ?></span>
-                                <span class="saved_car_field"><strong>VIN:</strong> <?= htmlspecialchars($car["vin"] ?? ""); ?></span>
-                                <?php if (!empty($car["saved_at"])): ?>
-                                    <span class="saved_car_field"><strong>Saved:</strong> <?= htmlspecialchars($car["saved_at"] ?? ""); ?></span>
-                                <?php endif; ?>
-                            </p>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div> -->
+            <div class="lookup_form_block">
+                <label for="yard_search">Search Our Yard: </label>
+                <input id="yard_search" placeholder="Search Parts">
+            </div>
+            <div class="lookup_form_block">
+            <label for="vehicle_type">Enter your vehicle type:</label>        
+                <select id="vehicle_type" name="selectedVehicle">
+                    <option value="0">Select a vehicle</option>
+                    <option value="1">Car</option>
+                    <option value="2">Truck</option>
+                    <option value="3">Motorcycle</option>
+                    <option value="4">SUV</option>            
+                </select>
+            </div>
 
+        </div>
+        <div id="results_container" class="lookup_form_stack">
+            <span class="lookup_form_block">Enter a part name!</span>
+
+        </div>
         
         <?php include __DIR__ . "/../partials/footer.php"; ?>
     </body>
