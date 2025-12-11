@@ -15,6 +15,26 @@
         <?php include __DIR__ . "/partials/navbar.php"; ?>
         <h1>Welcome to Scrap</h1>
         <p>Get your hands on our junk!</p>
+        <div class="car_container">
+            <div class="car">
+                <img src="images/cars/car2.png">
+            </div>
+            <div class="car">
+                <img src="images/cars/car3.png">
+            </div>
+            <div class="car">
+                <img src="images/cars/car4.png">
+            </div>
+            <div class="car">
+                <img src="images/cars/car5.png">
+            </div>
+            <div class="car">
+                <img src="images/cars/car6.png">
+            </div>
+            <div class="car">
+                <img src="images/cars/car7.png">
+            </div>
+        </div>
         <?php include __DIR__ . "/partials/footer.php"; ?>
     </body>
 </html>
